@@ -40,3 +40,13 @@ button {
     font-size: 26px;
     margin-top: 15px;
 }
+
+#guesses {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #ccc;
+}
+
+#guessList li {
+    margin: 5px 0;
+}
