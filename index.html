@@ -1,30 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saleh's Stream</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>لعبة وردل مع الشات - S4leeh</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/tmi.js@1.8.5"></script>
 </head>
 <body>
-    <header>
-        <h1>🎮 Saleh's Stream</h1>
-        <p>لعبة Wordle العربية - جاوب مع الشات!</p>
-    </header>
-    <main>
-        <div id="wordle-container">
-            <input type="text" id="guessInput" maxlength="5" placeholder="ادخل الكلمة">
-            <button onclick="checkGuess()">إرسال</button>
-            <div id="message"></div>
-            <div id="timer">05:00</div>
-        </div>
-        <div id="guesses">
-            <h3>التخمينات السابقة:</h3>
-            <ul id="guessList">
-                <!-- سيتم عرض الكلمات هنا -->
-            </ul>
-        </div>
-    </main>
-    <script src="script.js"></script>
+  <h1>🎮 لعبة وردل مع الشات - S4leeh</h1>
+  <div id="game-container">
+    <input type="text" id="guessInput" placeholder="اكتب كلمتك هنا">
+    <button onclick="submitGuess()">خمن</button>
+    <div id="feedback"></div>
+    <div id="previousGuesses"></div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>

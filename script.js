@@ -1,57 +1,46 @@
-const wordList = ['تفاح', 'سحاب', 'نجاح', 'كتاب', 'سلام'];
-let targetWord = wordList[Math.floor(Math.random() * wordList.length)];
-let timer = 300;
-let timerDisplay = document.getElementById("timer");
-let messageBox = document.getElementById("message");
-let guesses = []; // تخزين الكلمات التي تم تخمينها
 
-function checkGuess() {
-    const input = document.getElementById("guessInput");
-    const guess = input.value.trim();
-    if (guess === targetWord) {
-        messageBox.textContent = "🎉 إجابة صحيحة!";
-        clearInterval(countdown);
+const secretWord = "تفاح";
+const maxAttempts = 6;
+let attempts = 0;
+const previousGuessesDiv = document.getElementById("previousGuesses");
+
+function analyzeGuess(guess) {
+  if (guess.length !== secretWord.length) return "❌ الكلمة لازم تكون 4 حروف";
+  let result = "";
+  for (let i = 0; i < guess.length; i++) {
+    if (guess[i] === secretWord[i]) {
+      result += "<span class='correct'>" + guess[i] + "</span>";
+    } else if (secretWord.includes(guess[i])) {
+      result += "<span class='misplaced'>" + guess[i] + "</span>";
     } else {
-        messageBox.textContent = "❌ حاول مرة أخرى!";
+      result += "<span class='wrong'>" + guess[i] + "</span>";
     }
-
-    // إضافة الكلمة إلى قائمة التخمينات مع تحليل الحروف
-    guesses.push(guess);
-    updateGuessList(guess);
-
-    input.value = "";
+  }
+  return result;
 }
 
-function updateGuessList(guess) {
-    const guessList = document.getElementById("guessList");
-    const li = document.createElement("li");
-
-    let result = "";
-    for (let i = 0; i < targetWord.length; i++) {
-        const currentLetter = guess[i];
-        if (currentLetter === targetWord[i]) {
-            result += `<span style="color: green">${currentLetter}</span>`; // حرف صحيح
-        } else if (targetWord.includes(currentLetter)) {
-            result += `<span style="color: yellow">${currentLetter}</span>`; // حرف موجود ولكن في مكان خاطئ
-        } else {
-            result += `<span style="color: gray">${currentLetter}</span>`; // حرف غير صحيح
-        }
-    }
-
-    li.innerHTML = result;
-    guessList.appendChild(li);
+function submitGuess(fromChat = false, guessText = "") {
+  const input = document.getElementById("guessInput");
+  const guess = fromChat ? guessText.trim() : input.value.trim();
+  if (!guess) return;
+  const feedback = analyzeGuess(guess);
+  const div = document.createElement("div");
+  div.innerHTML = "🔹 " + guess + " ➜ " + feedback;
+  previousGuessesDiv.prepend(div);
+  if (!fromChat) input.value = "";
 }
 
-const countdown = setInterval(() => {
-    if (timer <= 0) {
-        clearInterval(countdown);
-        messageBox.textContent = `انتهى الوقت! الكلمة كانت: ${targetWord}`;
-    } else {
-        timer--;
-        let minutes = Math.floor(timer / 60);
-        let seconds = timer % 60;
-        timerDisplay.textContent =
-            (minutes < 10 ? "0" : "") + minutes + ":" +
-            (seconds < 10 ? "0" : "") + seconds;
-    }
-}, 1000);
+// إعداد بوت الشات
+const client = new tmi.Client({
+  channels: ['s4leeh']
+});
+
+client.connect();
+
+client.on('message', (channel, tags, message, self) => {
+  if (self) return;
+  if (message.startsWith("!خمن ")) {
+    const guess = message.replace("!خمن ", "").trim();
+    submitGuess(true, guess);
+  }
+});

@@ -1,52 +1,22 @@
+
 body {
-    font-family: 'Arial', sans-serif;
-    direction: rtl;
-    text-align: center;
-    background-color: #121212;
-    color: white;
-    margin: 0;
-    padding: 0;
+  font-family: 'Arial', sans-serif;
+  direction: rtl;
+  text-align: center;
+  background-color: #121212;
+  color: white;
 }
-
-header {
-    background-color: #1f1f1f;
-    padding: 20px;
-    border-bottom: 2px solid #444;
+#game-container {
+  margin-top: 50px;
 }
-
-#wordle-container {
-    margin-top: 50px;
+input, button {
+  padding: 10px;
+  font-size: 18px;
 }
-
-input {
-    font-size: 20px;
-    padding: 10px;
-    width: 200px;
+#feedback {
+  margin-top: 20px;
+  font-size: 20px;
 }
-
-button {
-    padding: 10px 20px;
-    font-size: 18px;
-    margin-right: 10px;
-}
-
-#message {
-    margin-top: 20px;
-    font-size: 22px;
-    color: lightgreen;
-}
-
-#timer {
-    font-size: 26px;
-    margin-top: 15px;
-}
-
-#guesses {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #ccc;
-}
-
-#guessList li {
-    margin: 5px 0;
-}
+.correct { color: green; }
+.misplaced { color: orange; }
+.wrong { color: red; }
